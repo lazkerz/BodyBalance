@@ -26,7 +26,7 @@ If, you want get new change from tailwind:
 npx mix
 ```
 
-#Running Application
+## Running Application
 Turn On Apache and Mysql
 ```bash
 php spark serve
