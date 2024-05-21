@@ -16,12 +16,20 @@ composer install
 
 ```bash
 Create database bmi
+#
+php spark migrate
 ```
 
 If, you want get new change from tailwind:
 
 ```bash
 npx mix
+```
+
+#Running Application
+Turn On Apache and Mysql
+```bash
+php spark serve
 ```
 
 ## Server Requirements
