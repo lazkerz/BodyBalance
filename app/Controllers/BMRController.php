@@ -25,6 +25,21 @@ class BMRController extends BaseController
         $tdee = $this->calculateTDEE($bmr, $activityLevel);
         $calories = $this->calculateGoalCalories($tdee, $goal);
 
+        $bmrHistoryModel = new BMRHistoryModel();
+        $bmrHistoryModel->truncate();
+        $bmrHistoryModel->insert([
+            'height' => $height,
+            'weight' => $weight,
+            'age' => $age,
+            'gender' => $gender,
+            'activity_level' => $activityLevel,
+            'goal' => $goal,
+            'bmr' => $bmr,
+            'tdee' => $tdee,
+            'calories' => $calories,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
         return view('calorie_result', [
             'bmr' => $bmr,
             'tdee' => $tdee,
@@ -34,7 +49,7 @@ class BMRController extends BaseController
 
     private function calculateBMR($height, $weight, $age, $gender)
     {
-        if ($gender == 'male') {
+        if ($gender == 'pria') {
             return 88.362 + (13.397 * $weight) + (4.799 * $height) - (5.677 * $age);
         } else {
             return 447.593 + (9.247 * $weight) + (3.098 * $height) - (4.330 * $age);
@@ -62,11 +77,11 @@ class BMRController extends BaseController
     private function calculateGoalCalories($tdee, $goal)
     {
         switch ($goal) {
-            case 'lose_weight':
+            case 'turun_berat_badan':
                 return $tdee - 500;
-            case 'maintain_weight':
+            case 'pertahankan_berat_badan':
                 return $tdee;
-            case 'gain_weight':
+            case 'naikkan_berat_badan':
                 return $tdee + 500;
             default:
                 return $tdee;
